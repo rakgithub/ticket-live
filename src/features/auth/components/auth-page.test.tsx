@@ -2,11 +2,13 @@ import { cleanup, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { AuthPage } from './auth-page'
+import { clearAccessToken } from '../api/auth-session'
 
 afterEach(() => {
   cleanup()
   vi.unstubAllGlobals()
   vi.restoreAllMocks()
+  clearAccessToken()
 })
 
 describe('AuthPage', () => {
@@ -37,7 +39,7 @@ describe('AuthPage', () => {
   })
 
   it('sends valid login credentials to the login endpoint', async () => {
-    const fetchMock = vi.fn().mockResolvedValue(new Response(null, { status: 204 }))
+    const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify({ accessToken: 'test-token', tokenType: 'Bearer' }), { status: 200 }))
     vi.stubGlobal('fetch', fetchMock)
     const user = userEvent.setup()
     render(<AuthPage />)
@@ -50,7 +52,6 @@ describe('AuthPage', () => {
       expect.stringMatching(/\/login$/),
       expect.objectContaining({
         method: 'POST',
-        credentials: 'include',
         body: JSON.stringify({ email: 'person@example.com', password: 'correct-horse-battery' }),
       }),
     )
@@ -82,7 +83,7 @@ describe('AuthPage', () => {
   })
 
   it('sends valid registration credentials to the register endpoint', async () => {
-    const fetchMock = vi.fn().mockResolvedValue(new Response(null, { status: 201 }))
+    const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify({ accessToken: 'test-token', tokenType: 'Bearer' }), { status: 201 }))
     vi.stubGlobal('fetch', fetchMock)
     const user = userEvent.setup()
     render(<AuthPage />)
@@ -97,7 +98,6 @@ describe('AuthPage', () => {
       expect.stringMatching(/\/register$/),
       expect.objectContaining({
         method: 'POST',
-        credentials: 'include',
         body: JSON.stringify({ name: 'Taylor Example', email: 'taylor@example.com', password: 'long-enough-password' }),
       }),
     )

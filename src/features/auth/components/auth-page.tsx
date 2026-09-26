@@ -7,7 +7,11 @@ import { login, register } from '../api/auth-api'
 
 type AuthMode = 'login' | 'signup'
 
-export function AuthPage() {
+interface AuthPageProps {
+  onAuthenticated?: () => void
+}
+
+export function AuthPage({ onAuthenticated }: AuthPageProps) {
   const [mode, setMode] = useState<AuthMode>('login')
   const [message, setMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -30,6 +34,7 @@ export function AuthPage() {
       if (mode === 'login') {
         await login({ email, password })
         setMessage('Signed in successfully.')
+        onAuthenticated?.()
       } else {
         const name = formData.get('name')
         if (typeof name !== 'string') {
@@ -38,6 +43,7 @@ export function AuthPage() {
         }
         await register({ name, email, password })
         setMessage('Account created successfully.')
+        onAuthenticated?.()
       }
     } catch (error) {
       setMessage(error instanceof Error ? error.message : 'Unable to complete your request.')
