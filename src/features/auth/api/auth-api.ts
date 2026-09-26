@@ -1,4 +1,5 @@
 import type { LoginCredentials, RegisterCredentials } from '../types/types'
+import { clearAccessToken, getAccessToken, saveAccessToken } from './auth-session'
 
 const baseUrl = import.meta.env.BASE_API_URL
 
@@ -25,17 +26,38 @@ async function getErrorMessage(response: Response) {
   return fallbackMessage
 }
 
+interface AuthenticationResponse {
+  accessToken: string
+  tokenType: string
+}
+
+function isAuthenticationResponse(value: unknown): value is AuthenticationResponse {
+  return typeof value === 'object'
+    && value !== null
+    && 'accessToken' in value
+    && typeof value.accessToken === 'string'
+    && value.accessToken.length > 0
+    && 'tokenType' in value
+    && value.tokenType === 'Bearer'
+}
+
 async function sendJson(path: '/login' | '/register', payload: LoginCredentials | RegisterCredentials) {
   const response = await fetch(getEndpoint(path), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
     body: JSON.stringify(payload),
   })
 
   if (!response.ok) {
     throw new Error(await getErrorMessage(response))
   }
+
+  const body: unknown = await response.json()
+  if (!isAuthenticationResponse(body)) {
+    throw new Error('The server returned an invalid authentication response.')
+  }
+
+  saveAccessToken(body.accessToken)
 }
 
 export function login(credentials: LoginCredentials) {
@@ -47,12 +69,15 @@ export function register(credentials: RegisterCredentials) {
 }
 
 export async function logout() {
+  const accessToken = getAccessToken()
   const response = await fetch(getEndpoint('/logout'), {
     method: 'POST',
-    credentials: 'include',
+    headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : undefined,
   })
 
   if (!response.ok) {
     throw new Error(await getErrorMessage(response))
   }
+
+  clearAccessToken()
 }
