@@ -1,5 +1,5 @@
 import type { SubmitEventHandler } from 'react'
-import { Button, Textbox } from '@/design-system'
+import { Button, Textbox } from '@/ui'
 
 interface LoginFormProps {
   onSubmit: SubmitEventHandler<HTMLFormElement>

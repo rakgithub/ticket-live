@@ -1,5 +1,5 @@
 import { useState, type SubmitEvent } from 'react'
-import { Button } from '@/design-system'
+import { Button } from '@/ui'
 import { AuthShell } from './auth-shell'
 import { LoginForm } from './login-form'
 import { SignupForm } from './signup-form'

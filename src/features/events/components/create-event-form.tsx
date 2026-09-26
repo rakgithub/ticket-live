@@ -1,5 +1,5 @@
 import { useId, type SubmitEventHandler } from 'react'
-import { Button, Textbox } from '@/design-system'
+import { Button, Textbox } from '@/ui'
 
 interface CreateEventFormProps {
   onSubmit: SubmitEventHandler<HTMLFormElement>

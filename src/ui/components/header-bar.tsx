@@ -1,4 +1,4 @@
-import { ChevronDown, Command, Menu, Moon, Sun } from 'lucide-react'
+import { ChevronDown, Menu, Moon, Sun, TicketCheck } from 'lucide-react'
 import * as React from 'react'
 import { Button } from './button'
 import { Dropdown } from './dropdown'
@@ -36,7 +36,7 @@ export function HeaderBar({
       <div className="mx-auto flex min-h-header-height max-w-content items-center justify-between gap-space-4 px-page-gutter">
         <div className="flex min-w-0 items-center gap-space-8">
           <a href="#main" className="flex items-center gap-space-3 rounded-control text-text-primary no-underline focus-visible:outline-none focus-visible:ring-focus focus-visible:ring-offset-focus focus-visible:ring-offset-surface-page" aria-label="Ticket Live home">
-            {brand ?? <span className="flex size-icon-lg items-center justify-center rounded-control bg-action-primary text-action-primary-text"><Command aria-hidden="true" className="size-icon-sm" /></span>}
+            {brand ?? <span className="flex size-icon-lg items-center justify-center rounded-control bg-action-primary text-action-primary-text"><TicketCheck aria-hidden="true" className="size-icon-sm" /></span>}
             <span className="truncate text-body-sm font-semibold">{title}</span>
           </a>
           {navigation ? <nav aria-label="Primary" className="hidden items-center gap-space-2 md:flex">{navigation}</nav> : null}

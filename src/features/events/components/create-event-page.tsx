@@ -1,6 +1,5 @@
 import { useState, type SubmitEvent } from 'react'
-import { useNavigate } from 'react-router'
-import { Card, CardDescription, CardHeader } from '@/design-system'
+import { Card, CardDescription, CardHeader } from '@/ui'
 import { createEvent } from '../api/events-api'
 import type { CreateEventInput } from '../types/event'
 import { CreateEventForm } from './create-event-form'
@@ -81,19 +80,19 @@ function getCreateEventInput(formData: FormData): CreateEventInput {
 }
 
 export function CreateEventPage() {
-  const navigate = useNavigate()
   const [message, setMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
 
   async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
+    const formElement = event.currentTarget
     setMessage('')
     setIsSuccess(false)
 
     let input: CreateEventInput
     try {
-      input = getCreateEventInput(new FormData(event.currentTarget))
+      input = getCreateEventInput(new FormData(formElement))
     } catch (error) {
       setMessage(error instanceof Error ? error.message : 'Check the event details and try again.')
       return
@@ -102,9 +101,9 @@ export function CreateEventPage() {
     setIsSubmitting(true)
     try {
       await createEvent(input)
-      setMessage('Event created successfully.')
+      formElement.reset()
+      setMessage('Event published and will be live soon.')
       setIsSuccess(true)
-      navigate('/events', { replace: true })
     } catch (error) {
       setMessage(error instanceof Error ? error.message : 'Unable to create the event. Please try again.')
     } finally {
@@ -113,7 +112,7 @@ export function CreateEventPage() {
   }
 
   return (
-    <main className="grid min-h-svh place-items-center bg-surface-page px-page-gutter py-section-gap text-text-primary">
+    <main id="main" className="grid min-h-svh place-items-center bg-surface-page px-page-gutter py-section-gap text-text-primary">
       <Card size="lg" padding="lg" className="grid gap-space-6">
         <CardHeader>
           <h1 className="text-title font-semibold leading-tight text-text-primary">Create an event</h1>
