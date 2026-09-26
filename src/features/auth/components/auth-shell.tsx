@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { TicketCheck } from 'lucide-react'
-import { Card } from '@/design-system'
+import { Card } from '@/ui'
 
 interface AuthShellProps {
   title: string
