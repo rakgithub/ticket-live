@@ -2,7 +2,7 @@ import { readFile, readdir, stat } from 'node:fs/promises'
 import { join, relative } from 'node:path'
 
 const root = new URL('../', import.meta.url).pathname
-const appRoots = ['src/App.tsx', 'src/app', 'src/design-system', '.storybook']
+const appRoots = ['src/App.tsx', 'src/app', 'src/features', 'src/shared', 'src/design-system', '.storybook']
 const errors = []
 
 async function walk(path) {
