@@ -1,5 +1,5 @@
 import type { Decorator, Preview } from '@storybook/react-vite'
-import '../src/design-system/index.css'
+import '../src/ui/index.css'
 import { ThemeFrame } from './theme-frame'
 
 const withTheme: Decorator = (Story, context) => {

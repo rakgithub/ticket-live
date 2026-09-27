@@ -1,7 +1,7 @@
 import { ArrowUpRight, Inbox } from 'lucide-react'
 import * as React from 'react'
-import { Card, type CardSize } from './card'
-import { cn } from '../lib/cn'
+import { Card, type CardSize } from '../card/card'
+import { cn } from '../../lib/cn'
 
 export interface ListCardProps<T> {
   heading: React.ReactNode

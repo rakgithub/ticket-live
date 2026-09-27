@@ -1,9 +1,11 @@
 import { Link, useLoaderData, useRevalidator, useRouteError } from 'react-router'
 import { CalendarDays, GlassWater, MapPin, Ticket, Users } from 'lucide-react'
-import type { ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { Button, Card, CardDescription, CardHeader } from '@/ui'
 import { eventsLoader } from '../api/events-api'
 import type { EventSummary } from '../types/event'
+import { BookingConfirmationModal } from './booking-confirmation-modal'
+import { formatEventDate, formatEventPrice } from '../lib/event-formatters'
 
 interface EventDetailProps {
   icon: ReactNode
@@ -23,29 +25,10 @@ function EventDetail({ icon, label, value }: EventDetailProps) {
   )
 }
 
-function formatEventDate(startsAt: string) {
-  return new Intl.DateTimeFormat(undefined, {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-  }).format(new Date(startsAt))
-}
-
-function formatTicketPrice(event: EventSummary) {
-  const currencyCode = event.currencyCode.trim()
-  const amount = event.ticketPriceCents / 100
-
-  try {
-    return new Intl.NumberFormat(undefined, {
-      style: 'currency',
-      currency: currencyCode,
-    }).format(amount)
-  } catch {
-    return `${currencyCode} ${amount.toFixed(2)}`
-  }
-}
-
 function EventCard({ event }: { event: EventSummary }) {
   const ticketsAvailable = Math.max(event.maxPeople - event.reservedQuantity, 0)
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false)
+
   return (
     <Card size="full" padding="sm" className="h-full">
       <article className="grid h-full gap-space-4">
@@ -71,13 +54,24 @@ function EventCard({ event }: { event: EventSummary }) {
         <footer className="mt-auto flex items-center justify-between gap-space-3 border-t border-border-subtle pt-space-3">
           <div className="flex items-center gap-space-2 text-body-sm font-semibold text-text-primary">
             <Ticket aria-hidden="true" className="size-icon-sm text-text-muted" />
-            {formatTicketPrice(event)}
+            {formatEventPrice(event.ticketPriceCents, event.currencyCode)}
           </div>
-          <Button type="button" size="sm">
+          <Button
+            type="button"
+            size="sm"
+            disabled={event.isCancelled || ticketsAvailable === 0}
+            onClick={() => setIsBookingModalOpen(true)}
+          >
             Book
           </Button>
         </footer>
       </article>
+      <BookingConfirmationModal
+        event={event}
+        availableSeats={ticketsAvailable}
+        isOpen={isBookingModalOpen}
+        onOpenChange={setIsBookingModalOpen}
+      />
     </Card>
   )
 }

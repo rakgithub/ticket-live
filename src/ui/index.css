@@ -27,6 +27,7 @@
   --color-surface-card: var(--ds-surface-card);
   --color-surface-subtle: var(--ds-surface-subtle);
   --color-surface-popover: var(--ds-surface-popover);
+  --color-modal-overlay: var(--ds-modal-overlay);
   --color-text-primary: var(--ds-text-primary);
   --color-text-secondary: var(--ds-text-secondary);
   --color-text-muted: var(--ds-text-muted);
@@ -87,6 +88,7 @@
   --spacing-icon-lg: var(--ref-icon-lg);
   --spacing-header-height: var(--ref-header-height);
   --spacing-popover-min: var(--ref-popover-min);
+  --spacing-modal-width: var(--ref-modal-width);
   --spacing-card-width-sm: var(--ref-card-width-sm);
   --spacing-mobile-viewport: var(--ref-mobile-viewport);
   --spacing-desktop-viewport: var(--ref-desktop-viewport);

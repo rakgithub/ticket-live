@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { CalendarDays, CircleHelp, Search, TicketCheck } from 'lucide-react'
-import { Button } from './components/button'
-import { Card } from './components/card'
-import { Dropdown } from './components/dropdown'
-import { HeaderBar } from './components/header-bar'
-import { ListCard, ListCardRow } from './components/list-card'
-import { Textbox } from './components/textbox'
+import { Button } from './components/button/button'
+import { Card } from './components/card/card'
+import { Dropdown } from './components/dropdown/dropdown'
+import { HeaderBar } from './components/header-bar/header-bar'
+import { ListCard, ListCardRow } from './components/list-card/list-card'
+import { Textbox } from './components/textbox/textbox'
 
 const meta = {
   title: 'Patterns/Ticket workspace',

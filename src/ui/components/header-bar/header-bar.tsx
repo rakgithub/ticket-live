@@ -1,8 +1,8 @@
 import { ChevronDown, Menu, Moon, Sun, TicketCheck } from 'lucide-react'
 import * as React from 'react'
-import { Button } from './button'
-import { Dropdown } from './dropdown'
-import { cn } from '../lib/cn'
+import { Button } from '../button/button'
+import { Dropdown } from '../dropdown/dropdown'
+import { cn } from '../../lib/cn'
 
 export interface HeaderBarProps extends React.HTMLAttributes<HTMLElement> {
   title: string
