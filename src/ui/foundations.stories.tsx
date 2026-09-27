@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Card, CardDescription, CardHeader, CardTitle } from './components/card'
+import { Card, CardDescription, CardHeader, CardTitle } from './components/card/card'
 
 const meta = {
   title: 'Foundations/Design Tokens',
@@ -14,6 +14,7 @@ const colorTokens = [
   { name: 'Page surface', bg: 'bg-surface-page', text: 'text-text-primary', token: '--ds-surface-page' },
   { name: 'Card surface', bg: 'bg-surface-card', text: 'text-text-primary', token: '--ds-surface-card' },
   { name: 'Subtle surface', bg: 'bg-surface-subtle', text: 'text-text-primary', token: '--ds-surface-subtle' },
+  { name: 'Modal overlay', bg: 'bg-modal-overlay', text: 'text-action-primary-text', token: '--ds-modal-overlay' },
   { name: 'Primary action', bg: 'bg-action-primary', text: 'text-action-primary-text', token: '--ds-action-primary' },
   { name: 'Selection', bg: 'bg-selection', text: 'text-text-primary', token: '--ds-selection' },
   { name: 'Success', bg: 'bg-success-surface', text: 'text-success', token: '--ds-success' },

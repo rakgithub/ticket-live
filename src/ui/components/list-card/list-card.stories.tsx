@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { UserRound } from 'lucide-react'
-import { Button } from './button'
+import { Button } from '../button/button'
 import { ListCard, ListCardRow } from './list-card'
 
 const records = [

@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 import { LoaderCircle } from 'lucide-react'
 import * as React from 'react'
-import { cn } from '../lib/cn'
+import { cn } from '../../lib/cn'
 
 const buttonVariants = cva(
   'inline-flex shrink-0 items-center justify-center gap-space-2 whitespace-nowrap rounded-control text-body-sm font-semibold transition-colors duration-motion-fast ease-standard focus-visible:outline-none focus-visible:ring-focus focus-visible:ring-offset-focus focus-visible:ring-offset-surface-page disabled:pointer-events-none disabled:opacity-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0',

@@ -5,6 +5,7 @@
   --ds-surface-card: var(--ref-neutral-0);
   --ds-surface-subtle: var(--ref-neutral-100);
   --ds-surface-popover: var(--ref-neutral-0);
+  --ds-modal-overlay: var(--ref-modal-overlay);
   --ds-text-primary: var(--ref-neutral-900);
   --ds-text-secondary: var(--ref-neutral-600);
   --ds-text-muted: var(--ref-neutral-500);
@@ -33,6 +34,7 @@
   --ds-surface-card: var(--ref-neutral-900);
   --ds-surface-subtle: var(--ref-neutral-800);
   --ds-surface-popover: var(--ref-neutral-800);
+  --ds-modal-overlay: var(--ref-modal-overlay);
   --ds-text-primary: var(--ref-neutral-50);
   --ds-text-secondary: var(--ref-neutral-300);
   --ds-text-muted: var(--ref-neutral-500);

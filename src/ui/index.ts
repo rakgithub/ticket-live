@@ -1,4 +1,4 @@
-export { Button, IconButton, type ButtonProps, type IconButtonProps } from './components/button'
+export { Button, IconButton, type ButtonProps, type IconButtonProps } from './components/button/button'
 export {
   Dropdown,
   DropdownMenu,
@@ -16,7 +16,7 @@ export {
   DropdownMenuTrigger,
   type DropdownItemData,
   type DropdownProps,
-} from './components/dropdown'
+} from './components/dropdown/dropdown'
 export {
   Card,
   CardContent,
@@ -26,7 +26,8 @@ export {
   CardTitle,
   type CardProps,
   type CardSize,
-} from './components/card'
-export { HeaderBar, type HeaderBarProps } from './components/header-bar'
-export { ListCard, ListCardRow, type ListCardProps, type ListCardRowProps } from './components/list-card'
-export { Textbox, type TextboxProps } from './components/textbox'
+} from './components/card/card'
+export { HeaderBar, type HeaderBarProps } from './components/header-bar/header-bar'
+export { ListCard, ListCardRow, type ListCardProps, type ListCardRowProps } from './components/list-card/list-card'
+export { Textbox, type TextboxProps } from './components/textbox/textbox'
+export { Modal, type ModalProps, type ModalSize } from './components/modal/modal'

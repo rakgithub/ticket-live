@@ -1,8 +1,8 @@
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { Check, ChevronDown, ChevronRight } from 'lucide-react'
 import * as React from 'react'
-import { Button } from './button'
-import { cn } from '../lib/cn'
+import { Button } from '../button/button'
+import { cn } from '../../lib/cn'
 
 export interface DropdownItemData {
   id: string
