@@ -82,6 +82,8 @@
   --ref-card-width-sm: 24rem;
   --ref-popover-min: 12rem;
   --ref-modal-width: calc(100vw - (2 * var(--ref-space-4)));
+  --ref-chat-panel-width: min(24rem, calc(100vw - (2 * var(--ref-space-4))));
+  --ref-chat-panel-height: min(34rem, calc(100dvh - (2 * var(--ref-space-4))));
   --ref-mobile-viewport: 24rem;
   --ref-desktop-viewport: 80rem;
   --ref-viewport-height: 48rem;
@@ -91,6 +93,7 @@
   --ref-ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --ref-layer-header: 10;
   --ref-layer-popover: 30;
+  --ref-layer-chat-widget: 40;
 
   --ref-space-page: var(--ref-space-6);
   --ref-space-section: var(--ref-space-8);

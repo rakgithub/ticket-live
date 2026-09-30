@@ -31,3 +31,4 @@ export { HeaderBar, type HeaderBarProps } from './components/header-bar/header-b
 export { ListCard, ListCardRow, type ListCardProps, type ListCardRowProps } from './components/list-card/list-card'
 export { Textbox, type TextboxProps } from './components/textbox/textbox'
 export { Modal, type ModalProps, type ModalSize } from './components/modal/modal'
+export { ChatBox, type ChatBoxProps, type ChatMessage } from './components/chat-box/chat-box'

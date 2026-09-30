@@ -32,6 +32,17 @@ describe('AuthenticatedLayout', () => {
     expect(screen.getByText('Ticket Live')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Log out' })).toBeInTheDocument()
     expect(screen.getByText('Event content')).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Chat with support' })).toBeInTheDocument()
+  })
+
+  it('shows locally sent chat messages in the shared page layout', async () => {
+    const user = userEvent.setup()
+    renderAuthenticatedLayout()
+
+    await user.type(screen.getByRole('textbox', { name: 'Message' }), 'Could you help with my ticket?')
+    await user.click(screen.getByRole('button', { name: 'Send message' }))
+
+    expect(screen.getByRole('log', { name: 'Conversation' })).toHaveTextContent('Could you help with my ticket?')
   })
 
   it('logs out and returns to sign in', async () => {

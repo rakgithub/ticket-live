@@ -89,6 +89,8 @@
   --spacing-header-height: var(--ref-header-height);
   --spacing-popover-min: var(--ref-popover-min);
   --spacing-modal-width: var(--ref-modal-width);
+  --spacing-chat-panel-width: var(--ref-chat-panel-width);
+  --spacing-chat-panel-height: var(--ref-chat-panel-height);
   --spacing-card-width-sm: var(--ref-card-width-sm);
   --spacing-mobile-viewport: var(--ref-mobile-viewport);
   --spacing-desktop-viewport: var(--ref-desktop-viewport);
@@ -108,8 +110,9 @@
   --container-card-width-sm: var(--ref-card-sm);
   --container-card-width-md: var(--ref-card-md);
   --container-card-width-lg: var(--ref-card-lg);
-  --z-header: var(--ref-layer-header);
-  --z-popover: var(--ref-layer-popover);
+  --z-index-header: var(--ref-layer-header);
+  --z-index-popover: var(--ref-layer-popover);
+  --z-index-chat-widget: var(--ref-layer-chat-widget);
 }
 
 @utility h-hairline {
