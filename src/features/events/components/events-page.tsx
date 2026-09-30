@@ -82,13 +82,13 @@ export function EventsPage() {
   return (
     <main id="main" className="mx-auto grid w-full max-w-content content-start gap-space-6 px-page-gutter py-section-gap text-text-primary">
       <header className="flex flex-wrap items-end justify-between gap-space-4">
-        <div className="grid gap-space-2">
+        {/* <div className="grid gap-space-2">
           <h1 className="text-title font-semibold leading-tight text-text-primary">Events</h1>
           <p className="text-body-sm text-text-secondary">Your events and ticket details.</p>
-        </div>
-        <Link className="inline-flex h-control-md items-center justify-center rounded-control bg-action-primary px-space-4 text-body-sm font-semibold text-action-primary-text no-underline transition-colors duration-motion-fast ease-standard hover:bg-action-primary-hover focus-visible:outline-none focus-visible:ring-focus focus-visible:ring-offset-focus focus-visible:ring-offset-surface-page" to="/events/new">
+        </div> */}
+        {/* <Link className="inline-flex h-control-md items-center justify-center rounded-control bg-action-primary px-space-4 text-body-sm font-semibold text-action-primary-text no-underline transition-colors duration-motion-fast ease-standard hover:bg-action-primary-hover focus-visible:outline-none focus-visible:ring-focus focus-visible:ring-offset-focus focus-visible:ring-offset-surface-page" to="/events/new">
           Create event
-        </Link>
+        </Link> */}
       </header>
 
       {events.length === 0 ? (
