@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { Link, Outlet, useNavigate } from 'react-router'
+import { ChatWidget } from '@/features/chat'
 import { logout } from '@/features/auth'
 import { clearAccessToken } from '@/features/auth/api/auth-session'
-import { Button, ChatBox, Dropdown, HeaderBar, type ChatMessage } from '@/ui'
+import { Button, Dropdown, HeaderBar } from '@/ui'
 
 export function AuthenticatedLayout() {
   const navigate = useNavigate()
   const [isLoggingOut, setIsLoggingOut] = useState(false)
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([])
 
   async function handleLogout() {
     setIsLoggingOut(true)
@@ -20,13 +20,6 @@ export function AuthenticatedLayout() {
       navigate('/login', { replace: true })
       setIsLoggingOut(false)
     }
-  }
-
-  function handleChatSend(message: string) {
-    setChatMessages((messages) => [
-      ...messages,
-      { id: `visitor-${messages.length + 1}`, author: 'visitor', text: message },
-    ])
   }
 
   const navigation = (
@@ -60,7 +53,7 @@ export function AuthenticatedLayout() {
         )}
       />
       <Outlet />
-      <ChatBox messages={chatMessages} onSend={handleChatSend} />
+      <ChatWidget />
     </div>
   )
 }

@@ -1,65 +1,82 @@
 # 🎟️ Ticket Live
 
-**Plan an event. Find your next one. Get tickets.**
+> Discover events, plan unforgettable experiences, and get ticket-ready — with an AI event guide built in.
 
-Ticket Live is an event and ticketing web app. Organizers can publish events, while signed-in users can browse availability and submit ticket checkout requests. The app uses a separate API service for account and event data.
+Ticket Live is a modern event and ticketing experience for people looking for their next outing and organizers bringing events to life. Browse live availability, create events, submit ticket checkout requests, and ask the AI chat assistant to search for events in plain language.
 
-| Layer | Tools |
+<p align="center">
+  <a href="#ai-event-chat">AI chat</a> ·
+  <a href="#what-you-can-do">Features</a> ·
+  <a href="#quick-start">Quick start</a> ·
+  <a href="#api-contract">API</a> ·
+  <a href="#development">Development</a>
+</p>
+
+| App | Interface | Quality |
+| --- | --- | --- |
+| React 19 · TypeScript · Vite · React Router | Tailwind CSS 4 · token-based UI · Lucide | Vitest · React Testing Library · Oxlint · Storybook |
+
+## AI event chat
+
+### Find the right event by asking naturally
+
+The floating assistant is available throughout authenticated areas of Ticket Live. Instead of filtering through listings manually, ask for what you want — for example, *“Jazz events in London this weekend”* — and the assistant searches the event catalogue while it responds.
+
+| Experience | What happens |
 | --- | --- |
-| App | React 19, TypeScript, Vite, React Router |
-| UI | Tailwind CSS 4, token-based design system, Lucide icons |
-| Component catalog | Storybook with accessibility addon |
-| Checks | Vitest, React Testing Library, Oxlint, TypeScript |
+| **Live event search** | Your prompt is sent to the authenticated streaming endpoint and matching event cards appear in the conversation. |
+| **Streaming answer** | Response text arrives progressively, with clear progress states for understanding, searching, and generating. |
+| **In-control interactions** | Stop a response at any time. If a request fails, retry the original question without retyping it. |
+| **Honest empty states** | No matches are shown explicitly, alongside any assistant guidance returned by the service. |
+| **Focused by design** | The compact chat can be minimized and reopened without losing an in-progress or completed response. |
 
-[Features](#features) · [Pages](#pages) · [Getting started](#getting-started) · [API contract](#api-contract) · [Development](#development)
+The feature is intentionally local and cancellable: it does not persist a conversation or reconnect automatically after an interrupted stream.
 
-## Features
+## What you can do
 
-| Area | What you can do |
+| Area | Capability |
 | --- | --- |
-| **Accounts** | Sign in or create an account. Authenticated routes are protected, and users can log out from the app header. |
-| **Events** | Browse event descriptions, date and time, location, remaining ticket availability, price, and event details. Cancelled and sold-out events cannot be booked. |
-| **Create an event** | Submit an event with guest limits, schedule, location, ticket price, currency, and alcohol-service details. The form validates values before sending them to the API. |
-| **Ticket checkout** | Select a seat quantity, review the total, and submit a checkout request. The app displays success or error feedback from the request. |
-| **Support chat** | Open or minimize the floating chat box on authenticated pages. Sent messages are shown in the local transcript. |
-| **Design system** | Reusable controls and patterns use shared design tokens and are documented in Storybook. Stories include light and dark theme previews. |
-
-> **Current scope:** The Orders page is a placeholder while order history is developed. The chat widget does not yet connect to a bot or persist messages.
+| **Account access** | Sign in, create an account, and use protected routes with a bearer-token session. |
+| **Explore events** | Review descriptions, dates, locations, availability, prices, and event details. |
+| **Book tickets** | Choose a quantity, check the total, and submit a checkout request. Cancelled or sold-out events cannot be booked. |
+| **Publish events** | Create an event with its schedule, location, guest limits, ticket price, currency, and alcohol-service details. |
+| **AI event chat** | Search the catalogue conversationally and receive streamed answers plus matching event results. |
+| **Consistent UI** | Explore reusable, theme-aware components and accessibility states in Storybook. |
 
 ## Pages
 
-| Path | Access | Description |
+| Route | Access | Purpose |
 | --- | --- | --- |
 | `/` | — | Redirects to `/events`. |
-| `/login` | Public | Sign in or switch to account creation. Signed-in users are redirected to events. |
-| `/events` | Signed in | Browse events and open the booking checkout flow. |
+| `/login` | Public | Sign in or create an account. Signed-in users are redirected to events. |
+| `/events` | Signed in | Browse events, ask the AI assistant, and start checkout. |
 | `/events/new` | Signed in | Create and publish an event. |
 | `/orders` | Signed in | Order history placeholder. |
 
-## Getting started
+## Quick start
 
-### Requirements
+### Prerequisites
 
 - Node.js
 - pnpm
 - A Ticket Live API service
 
-### Configure the API
+### 1. Configure the API
 
-Create a `.env` file in the repository root. For a local API listening on port `4002`, use:
+Create a `.env` file at the repository root:
 
 ```env
 BASE_API_URL=http://localhost:4002
 ```
 
-### Install and run
+### 2. Install and run
 
 ```bash
 pnpm install
 pnpm start
 ```
 
-Vite prints the local development URL. Authentication, event operations, and checkout require the API service to be running.
+Vite prints the local URL. The API service must be running for authentication, event operations, checkout, and AI chat.
 
 ## API contract
 
@@ -69,18 +86,28 @@ The frontend appends these routes to `BASE_API_URL`:
 | --- | --- | --- |
 | `POST` | `/login` | Authenticate with an email and password. |
 | `POST` | `/register` | Create an account with a name, email, and password. |
-| `POST` | `/logout` | End the current authenticated session. |
+| `POST` | `/logout` | End the authenticated session. |
 | `GET` | `/events` | Return an object shaped like `{ "events": [...] }`. |
 | `POST` | `/events` | Create an event. |
 | `POST` | `/orders/checkout` | Submit `{ "eventId", "quantity" }` for checkout. |
+| `POST` | `/chat/events/stream` | Stream AI-assisted event search for `{ "message", "limit" }`. |
 
-Authenticated requests send the access token as a Bearer token. Event records include an ID, name, description, location, start time, guest limits, reserved quantity, ticket price in cents, currency code, alcohol-service flag, and cancellation flag. See [`src/features/events/types/event.ts`](src/features/events/types/event.ts) for the TypeScript contract.
+Authenticated requests use an access token with the `Bearer` scheme. A successful login or registration response must include `accessToken` and `tokenType: "Bearer"`.
 
-Successful login and registration responses must include an `accessToken` and `tokenType: "Bearer"`. Event creation sends the event fields represented by `CreateEventInput`; checkout sends an event ID and quantity.
+### AI chat stream
+
+`POST /chat/events/stream` accepts `text/event-stream` responses. The client handles these event types:
+
+| Event | Role in the conversation |
+| --- | --- |
+| `status` | Signals that the request is being interpreted or event search is underway. |
+| `results` | Provides matching event summaries and a result count. An empty result set is valid. |
+| `delta` | Appends a fragment of the assistant’s text response. |
+| `done` | Marks the response complete. |
+
+Every recognised event includes a `requestId`. Invalid stream payloads, HTTP failures, and streams ending before `done` are presented as recoverable chat errors.
 
 ## Development
-
-### Commands
 
 | Command | Purpose |
 | --- | --- |
@@ -88,31 +115,31 @@ Successful login and registration responses must include an `accessToken` and `t
 | `pnpm test` | Run Vitest; interactive terminals use watch mode. |
 | `pnpm test:run` | Run the full test suite once. |
 | `pnpm lint` | Run Oxlint. |
-| `pnpm check:design-system` | Check app and UI sources for design-token rule violations. |
-| `pnpm build` | Run the design-system check, TypeScript build, and Vite production build. |
+| `pnpm check:design-system` | Validate design-token usage in app and UI sources. |
+| `pnpm build` | Run the token check, TypeScript build, and Vite production build. |
 | `pnpm storybook` | Start Storybook on port `6006`. |
-| `pnpm build-storybook` | Build the static Storybook catalog. |
+| `pnpm build-storybook` | Build the static component catalogue. |
 
-### Storybook
-
-Use Storybook to explore components, their states, and interaction examples:
+Run the focused chat checks while working on the assistant:
 
 ```bash
-pnpm storybook
+pnpm test:run -- src/features/chat src/ui/components/chat-box
+pnpm exec tsc -b
+pnpm lint
+pnpm check:design-system
 ```
 
-The catalog includes foundations, reusable components, and composed UI patterns. Theme controls let you inspect both light and dark appearances.
-
-### Project structure
+## Project structure
 
 ```text
 src/
-  app/                    # Router, guards, and authenticated page shell
+  app/                    # Routes, guards, and authenticated shell
   features/
-    auth/                 # Login, registration, and session API
-    events/               # Event browsing, creation, and checkout flow
+    auth/                 # Session and account flows
+    chat/                 # Streamed AI event search
+    events/               # Browsing, creation, and checkout flow
     orders/               # Checkout API and orders page
-  ui/                     # Design tokens, reusable components, and stories
+  ui/                     # Token-based reusable components and stories
 ```
 
-Feature-specific APIs, types, components, and tests live together. Shared visual components are exported from `src/ui/index.ts`.
+Feature APIs, types, components, hooks, and tests live together. Shared visual building blocks are exported from `src/ui/index.ts`.
