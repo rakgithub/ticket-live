@@ -32,7 +32,7 @@ describe('AuthenticatedLayout', () => {
     expect(screen.getByText('Ticket Live')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Log out' })).toBeInTheDocument()
     expect(screen.getByText('Event content')).toBeInTheDocument()
-    expect(screen.getByRole('region', { name: 'Chat with support' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Ask anything to AI' })).toBeInTheDocument()
   })
 
   it('shows locally sent chat messages in the shared page layout', async () => {

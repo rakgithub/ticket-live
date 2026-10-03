@@ -9,7 +9,7 @@ describe('ChatBox', () => {
   it('starts open by default and shows the empty conversation state', () => {
     render(<ChatBox onSend={() => undefined} />)
 
-    expect(screen.getByRole('region', { name: 'Chat with support' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Ask anything to AI' })).toBeInTheDocument()
     expect(screen.getByRole('log', { name: 'Conversation' })).toHaveTextContent('No messages yet.')
     expect(screen.getByRole('textbox', { name: 'Message' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Send message' })).toBeDisabled()
@@ -56,12 +56,12 @@ describe('ChatBox', () => {
     render(<ChatBox onSend={() => undefined} onOpenChange={onOpenChange} />)
 
     await user.click(screen.getByRole('button', { name: 'Minimize chat' }))
-    expect(screen.queryByRole('region', { name: 'Chat with support' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('region', { name: 'Ask anything to AI' })).not.toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Open chat' })).toHaveAttribute('aria-expanded', 'false')
     expect(onOpenChange).toHaveBeenLastCalledWith(false)
 
     await user.click(screen.getByRole('button', { name: 'Open chat' }))
-    expect(screen.getByRole('region', { name: 'Chat with support' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Ask anything to AI' })).toBeInTheDocument()
     expect(onOpenChange).toHaveBeenLastCalledWith(true)
   })
 

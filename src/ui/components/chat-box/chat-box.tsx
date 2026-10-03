@@ -8,6 +8,11 @@ export interface ChatMessage {
   id: string
   text: string
   author: 'visitor' | 'agent'
+  status?: 'streaming' | 'complete' | 'error' | 'cancelled'
+  statusMessage?: string
+  errorMessage?: string
+  content?: React.ReactNode
+  canRetry?: boolean
 }
 
 export interface ChatBoxProps {
@@ -18,6 +23,9 @@ export interface ChatBoxProps {
   isOpen?: boolean
   onOpenChange?: (isOpen: boolean) => void
   placeholder?: string
+  isStreaming?: boolean
+  onStop?: () => void
+  onRetry?: (messageId: string) => void
 }
 
 export function ChatBox({
@@ -28,12 +36,24 @@ export function ChatBox({
   isOpen: controlledIsOpen,
   onOpenChange,
   placeholder = 'Write a message...',
+  isStreaming = false,
+  onStop,
+  onRetry,
 }: ChatBoxProps) {
   const [internalIsOpen, setInternalIsOpen] = React.useState(defaultOpen)
   const [draft, setDraft] = React.useState('')
+  const conversationLogRef = React.useRef<HTMLDivElement>(null)
+  const shouldFollowLatestRef = React.useRef(true)
   const titleId = React.useId()
   const isControlled = controlledIsOpen !== undefined
   const isOpen = controlledIsOpen ?? internalIsOpen
+
+  React.useEffect(() => {
+    const conversationLog = conversationLogRef.current
+    if (isOpen && conversationLog && shouldFollowLatestRef.current) {
+      conversationLog.scrollTop = conversationLog.scrollHeight
+    }
+  }, [isOpen, messages])
 
   function handleOpenChange(nextIsOpen: boolean) {
     if (!isControlled) setInternalIsOpen(nextIsOpen)
@@ -68,21 +88,45 @@ export function ChatBox({
             </IconButton>
           </header>
 
-          <div role="log" aria-label="Conversation" aria-live="polite" className="flex min-h-0 flex-1 flex-col gap-space-3 overflow-y-auto p-space-4">
+          <div
+            ref={conversationLogRef}
+            role="log"
+            aria-label="Conversation"
+            aria-live="polite"
+            onScroll={(event) => {
+              const conversationLog = event.currentTarget
+              shouldFollowLatestRef.current = conversationLog.scrollHeight - conversationLog.scrollTop <= conversationLog.clientHeight
+            }}
+            className="flex min-h-0 flex-1 flex-col gap-space-3 overflow-y-auto p-space-4"
+          >
             {messages.length === 0 ? (
               <p className="m-auto text-center text-body-sm text-text-muted">No messages yet. Send a message to start the conversation.</p>
             ) : messages.map((message) => {
               const isVisitor = message.author === 'visitor'
               return (
                 <div key={message.id} className={cn('flex', isVisitor ? 'justify-end' : 'justify-start')}>
-                  <p
+                  <div
                     className={cn(
-                      'max-w-full whitespace-pre-wrap break-words rounded-card px-space-3 py-space-2 text-body-sm',
-                      isVisitor ? 'bg-action-primary text-action-primary-text' : 'bg-surface-subtle text-text-primary',
+                      'max-w-full break-words rounded-card px-space-3 py-space-2 text-body-sm',
+                      isVisitor ? 'whitespace-pre-wrap bg-action-primary text-action-primary-text' : 'bg-surface-subtle text-text-primary',
                     )}
                   >
-                    {message.text}
-                  </p>
+                    {message.content}
+                    {message.text ? <p className="whitespace-pre-wrap">{message.text}</p> : null}
+                    {message.statusMessage ? (
+                      <p role={message.status === 'streaming' ? 'status' : undefined} className="mt-space-2 text-label text-text-muted">
+                        {message.statusMessage}
+                      </p>
+                    ) : null}
+                    {message.errorMessage ? (
+                      <p role="alert" className="mt-space-2 text-label text-danger">{message.errorMessage}</p>
+                    ) : null}
+                    {message.canRetry && onRetry ? (
+                      <Button type="button" variant="outline" size="sm" className="mt-space-2" onClick={() => onRetry(message.id)}>
+                        Retry
+                      </Button>
+                    ) : null}
+                  </div>
                 </div>
               )
             })}
@@ -96,17 +140,24 @@ export function ChatBox({
                 autoComplete="off"
                 placeholder={placeholder}
                 value={draft}
+                disabled={isStreaming}
                 onChange={(event) => setDraft(event.currentTarget.value)}
               />
             </div>
-            <Button
-              type="submit"
-              aria-label="Send message"
-              leadingIcon={<Send aria-hidden="true" />}
-              disabled={!draft.trim()}
-            >
-              Send
-            </Button>
+            {isStreaming ? (
+              <Button type="button" variant="outline" onClick={onStop} disabled={!onStop}>
+                Stop generating
+              </Button>
+            ) : (
+              <Button
+                type="submit"
+                aria-label="Send message"
+                leadingIcon={<Send aria-hidden="true" />}
+                disabled={!draft.trim()}
+              >
+                Send
+              </Button>
+            )}
           </form>
         </section>
       ) : (
