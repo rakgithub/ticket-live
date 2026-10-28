@@ -1,3 +1,5 @@
 export { checkoutOrder } from './api/orders-api'
-export { OrdersPage } from './components/orders-page'
+export { getOrders, ordersLoader } from './api/orders-api'
+export { OrdersErrorPage, OrdersPage } from './components/orders-page'
 export type { CheckoutOrderInput } from './types/checkout-order'
+export type { Order, OrderEvent } from './types/order'

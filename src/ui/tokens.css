@@ -90,6 +90,8 @@
   --ref-tracking-tight: -0.025em;
   --ref-motion-fast: 120ms;
   --ref-motion-normal: 180ms;
+  --ref-motion-slow: 720ms;
+  --ref-motion-chat-dot-delay: 120ms;
   --ref-ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --ref-layer-header: 10;
   --ref-layer-popover: 30;
@@ -101,6 +103,18 @@
   --ref-space-card-md: var(--ref-space-6);
   --ref-space-card-lg: var(--ref-space-8);
   --default-border-width: var(--ref-border-width);
+}
+
+@keyframes chat-loading-dot {
+  0%, 60%, 100% {
+    opacity: var(--ref-opacity-disabled);
+    transform: translateY(0);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(calc(-1 * var(--ref-space-1)));
+  }
 }
 
 @theme {

@@ -1,4 +1,4 @@
-import { MessageCircle, Minus, Send } from 'lucide-react'
+import { MessageCircle, Minus, Send, Sparkles } from 'lucide-react'
 import * as React from 'react'
 import { Button, IconButton } from '../button/button'
 import { Textbox } from '../textbox/textbox'
@@ -26,6 +26,19 @@ export interface ChatBoxProps {
   isStreaming?: boolean
   onStop?: () => void
   onRetry?: (messageId: string) => void
+}
+
+function ChatLoadingIndicator({ message }: { message?: string }) {
+  return (
+    <div className="mt-space-2 flex items-center gap-space-2 text-label text-text-muted" role="status" aria-label="Assistant is typing">
+      <span aria-hidden="true" className="flex items-center gap-space-1">
+        <span data-testid="chat-loading-dot" className="size-icon-sm rounded-full bg-action-primary motion-safe:animate-chat-loading-dot" />
+        <span data-testid="chat-loading-dot" className="size-icon-sm rounded-full bg-action-primary motion-safe:animate-chat-loading-dot motion-safe:animate-chat-loading-dot-delay-one" />
+        <span data-testid="chat-loading-dot" className="size-icon-sm rounded-full bg-action-primary motion-safe:animate-chat-loading-dot motion-safe:animate-chat-loading-dot-delay-two" />
+      </span>
+      <span>{message ?? 'AI is thinking…'}</span>
+    </div>
+  )
 }
 
 export function ChatBox({
@@ -76,8 +89,16 @@ export function ChatBox({
           aria-labelledby={titleId}
           className="flex h-chat-panel-height flex-col overflow-hidden rounded-card border border-border-subtle bg-surface-card text-text-primary shadow-popover"
         >
-          <header className="flex shrink-0 items-center justify-between gap-space-3 border-b border-border-subtle px-space-4 py-space-3">
-            <h2 id={titleId} className="text-title-sm font-semibold leading-tight">{title}</h2>
+          <header className="flex shrink-0 items-center justify-between gap-space-3 border-b border-border-subtle bg-surface-subtle px-space-4 py-space-3">
+            <div className="flex min-w-0 items-center gap-space-2">
+              <span aria-hidden="true" className="flex size-target-min shrink-0 items-center justify-center rounded-card bg-action-primary text-action-primary-text">
+                <Sparkles className="size-icon-md" />
+              </span>
+              <div className="min-w-0">
+                <h2 id={titleId} className="truncate text-title-sm font-semibold leading-tight">{title}</h2>
+                <p className="text-label text-text-muted">Event discovery assistant</p>
+              </div>
+            </div>
             <IconButton
               type="button"
               aria-label="Minimize chat"
@@ -97,7 +118,7 @@ export function ChatBox({
               const conversationLog = event.currentTarget
               shouldFollowLatestRef.current = conversationLog.scrollHeight - conversationLog.scrollTop <= conversationLog.clientHeight
             }}
-            className="flex min-h-0 flex-1 flex-col gap-space-3 overflow-y-auto p-space-4"
+            className="flex min-h-0 flex-1 flex-col gap-space-4 overflow-y-auto bg-surface-card p-space-4"
           >
             {messages.length === 0 ? (
               <p className="m-auto text-center text-body-sm text-text-muted">No messages yet. Send a message to start the conversation.</p>
@@ -105,16 +126,20 @@ export function ChatBox({
               const isVisitor = message.author === 'visitor'
               return (
                 <div key={message.id} className={cn('flex', isVisitor ? 'justify-end' : 'justify-start')}>
-                  <div
+                  <article
                     className={cn(
-                      'max-w-full break-words rounded-card px-space-3 py-space-2 text-body-sm',
-                      isVisitor ? 'whitespace-pre-wrap bg-action-primary text-action-primary-text' : 'bg-surface-subtle text-text-primary',
+                      'max-w-full break-words rounded-card border px-space-3 py-space-3 text-body-sm shadow-card',
+                      isVisitor
+                        ? 'whitespace-pre-wrap border-action-primary bg-action-primary text-action-primary-text'
+                        : 'border-border-subtle bg-surface-subtle text-text-primary',
                     )}
                   >
                     {message.content}
                     {message.text ? <p className="whitespace-pre-wrap">{message.text}</p> : null}
-                    {message.statusMessage ? (
-                      <p role={message.status === 'streaming' ? 'status' : undefined} className="mt-space-2 text-label text-text-muted">
+                    {message.status === 'streaming' ? (
+                      <ChatLoadingIndicator message={message.statusMessage} />
+                    ) : message.statusMessage ? (
+                      <p className="mt-space-2 text-label text-text-muted">
                         {message.statusMessage}
                       </p>
                     ) : null}
@@ -126,13 +151,13 @@ export function ChatBox({
                         Retry
                       </Button>
                     ) : null}
-                  </div>
+                  </article>
                 </div>
               )
             })}
           </div>
 
-          <form onSubmit={handleSubmit} aria-label="Send a message" className="flex shrink-0 items-end gap-space-2 border-t border-border-subtle p-space-3">
+          <form onSubmit={handleSubmit} aria-label="Send a message" className="flex shrink-0 items-end gap-space-2 border-t border-border-subtle bg-surface-subtle p-space-3">
             <div className="min-w-0 flex-1">
               <Textbox
                 label="Message"

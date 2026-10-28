@@ -90,4 +90,18 @@ describe('ChatBox', () => {
     expect(screen.getByRole('log', { name: 'Conversation' })).toHaveTextContent('Welcome!')
     expect(screen.getByRole('log', { name: 'Conversation' })).toHaveTextContent('Hello there.')
   })
+
+  it('shows an animated typing indicator while an assistant response streams', () => {
+    const messages: ChatMessage[] = [
+      { id: 'agent-1', author: 'agent', text: '', status: 'streaming', statusMessage: 'Searching events…' },
+    ]
+    render(<ChatBox messages={messages} isStreaming onSend={() => undefined} />)
+
+    expect(screen.getByRole('status', { name: 'Assistant is typing' })).toHaveTextContent('Searching events…')
+    const dots = screen.getAllByTestId('chat-loading-dot')
+    expect(dots).toHaveLength(3)
+    expect(dots[0]).toHaveClass('motion-safe:animate-chat-loading-dot')
+    expect(dots[1]).toHaveClass('motion-safe:animate-chat-loading-dot-delay-one')
+    expect(dots[2]).toHaveClass('motion-safe:animate-chat-loading-dot-delay-two')
+  })
 })

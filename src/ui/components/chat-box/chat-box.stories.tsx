@@ -71,6 +71,16 @@ export const Minimized: Story = {
 
 export const EmptyInput: Story = {}
 
+export const Streaming: Story = {
+  args: {
+    isStreaming: true,
+    messages: [
+      { id: 'question', author: 'visitor', text: 'What music events are happening this weekend?' },
+      { id: 'answer', author: 'agent', text: '', status: 'streaming', statusMessage: 'Searching events…' },
+    ],
+  },
+}
+
 export const LongConversation: Story = {
   args: {
     messages: [
