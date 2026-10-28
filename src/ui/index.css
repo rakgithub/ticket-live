@@ -102,6 +102,7 @@
   --ring-offset-width-focus: var(--ref-space-1);
   --transition-duration-motion-fast: var(--ref-motion-fast);
   --transition-duration-motion-normal: var(--ref-motion-normal);
+  --transition-duration-motion-slow: var(--ref-motion-slow);
   --opacity-disabled: var(--ref-opacity-disabled);
   --shadow-card: var(--ref-shadow-card);
   --shadow-popover: var(--ref-shadow-popover);
@@ -113,6 +114,18 @@
   --z-index-header: var(--ref-layer-header);
   --z-index-popover: var(--ref-layer-popover);
   --z-index-chat-widget: var(--ref-layer-chat-widget);
+}
+
+@utility animate-chat-loading-dot {
+  animation: chat-loading-dot var(--ref-motion-slow) var(--ref-ease-standard) infinite;
+}
+
+@utility animate-chat-loading-dot-delay-one {
+  animation-delay: var(--ref-motion-chat-dot-delay);
+}
+
+@utility animate-chat-loading-dot-delay-two {
+  animation-delay: calc(2 * var(--ref-motion-chat-dot-delay));
 }
 
 @utility h-hairline {

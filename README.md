@@ -51,7 +51,7 @@ The feature is intentionally local and cancellable: it does not persist a conver
 | `/login` | Public | Sign in or create an account. Signed-in users are redirected to events. |
 | `/events` | Signed in | Browse events, ask the AI assistant, and start checkout. |
 | `/events/new` | Signed in | Create and publish an event. |
-| `/orders` | Signed in | Order history placeholder. |
+| `/orders` | Signed in | Order history from the API. |
 
 ## Quick start
 
@@ -90,6 +90,7 @@ The frontend appends these routes to `BASE_API_URL`:
 | `GET` | `/events` | Return an object shaped like `{ "events": [...] }`. |
 | `POST` | `/events` | Create an event. |
 | `POST` | `/orders/checkout` | Submit `{ "eventId", "quantity" }` for checkout. |
+| `GET` | `/orders` | Return `{ "orders": [...] }` for the authenticated user, including event, quantity, order/payment status, amounts, and timestamps. |
 | `POST` | `/chat/events/stream` | Stream AI-assisted event search for `{ "message", "limit" }`. |
 
 Authenticated requests use an access token with the `Bearer` scheme. A successful login or registration response must include `accessToken` and `tokenType: "Bearer"`.
