@@ -1,13 +1,22 @@
-# Repository implementation rules
+# Ticket Live UI engineering guide
 
-These rules apply whenever an agent adds or changes a feature in this repository. For the focused Codex implementation role, use `.codex/agents/implementation.toml`. The design-system contract is in `DESIGN_SYSTEM_IMPLEMENTATION.md`.
+Ticket Live is a React and TypeScript frontend for event discovery, booking, account access, and AI-assisted search. It uses Vite, React Router, Tailwind CSS, Vitest, and Storybook; pnpm is the repository package manager.
 
-1. **Design tokens are mandatory.** Put raw visual values only in `src/design-system/tokens.css`. Use semantic aliases and token-backed Tailwind utilities in components, pages, stories, and tests. Do not add hardcoded colors, dimensions, spacing, type sizes, radii, shadows, breakpoints, motion values, arbitrary Tailwind values, or inline visual styles outside the token source. Numbers that are data, IDs, or calculations unrelated to appearance are permitted. Import UI through `@/design-system`.
-2. **Organize by feature domain.** New application code belongs in `src/features/<domain>/` (for example `auth` or `dashboard`). Keep feature components, hooks, API functions, types, and colocated tests together. Reserve `src/design-system/` for reusable visual primitives and `src/shared/` only for code genuinely used across feature domains. Keep route and app entry files thin.
-3. **Compose small components.** Each component has one clear responsibility. Prefer pure, stateless presentational components with typed props; place fetching, orchestration, and necessary state in feature hooks or small containers. Split a component when unrelated concerns or branches accumulate.
-4. **Keep state at its narrowest owner.** Start with local React state, lift it only for a demonstrated shared need, and derive values instead of duplicating state. Use TanStack Query only when asynchronous server data, cache invalidation, or mutations need it. Keep query keys, API calls, and mutation logic inside the owning feature; do not use the query cache as a general UI state store.
-5. **Type public boundaries.** Define explicit named interfaces or type aliases for component props, API results, and domain models. Avoid `any`, unchecked casts, and ambiguous optional props. Use stable domain identifiers for list keys; never use an array index as a React key. Handle loading, empty, error, disabled, and invalid states where applicable.
-6. **Pause for structural approval.** Before applying a major structural change or executing a complex refactor, present the concrete affected files, migration approach, behavior impact, test plan, and rollback path. Wait for explicit user approval before making that change or committing it. Routine feature edits and focused fixes proceed without an extra checkpoint.
-7. **Cover feature behavior with Vitest.** For every new feature or behavior change, identify and test all meaningful scenarios: success, empty, loading, failures, invalid input, boundary values, user interactions, and state transitions as applicable. Use deterministic fixtures and assertions on observable behavior. Configure Vitest and the needed React testing utilities when first required; do not claim exhaustive coverage of unbounded inputs. Run affected Vitest tests, typecheck, lint, design-system check, and relevant builds before reporting completion.
+## Repository layout
 
-When adding `src/features/`, ensure `scripts/check-design-system.mjs` scans that directory so token violations in new features fail the build.
+- `src/app/` contains routing, guards, and the application shell.
+- `src/features/` contains feature-owned components, APIs, types, hooks, and tests.
+- `src/ui/` contains the current shared UI components, tokens, and stories.
+- `scripts/` contains repository checks; `docs/guardrails/` contains engineering conventions.
+
+Read the relevant convention files before planning, implementing, testing, or verifying a change:
+
+- [TypeScript conventions](docs/guardrails/typescript-conventions.md)
+- [Planning conventions](docs/guardrails/planning-conventions.md)
+- [Implementation conventions](docs/guardrails/implementation-conventions.md)
+- [Testing conventions](docs/guardrails/testing-conventions.md)
+- [Verification conventions](docs/guardrails/verification-conventions.md)
+
+Use the guardrails as the contribution rules for features and fixes. For current paths and workflow, this guide and the guardrails take precedence over older implementation plans. Follow existing conventions where they agree; do not copy an existing violation into new code.
+
+Make routine implementation decisions independently within the requested scope. Preserve unrelated work, avoid incidental refactors, and request input only for missing product decisions or the structural approval defined in planning conventions. Completion requires the applicable verification checks and a concise report of changes, results, and remaining limitations.

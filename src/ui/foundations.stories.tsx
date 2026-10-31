@@ -46,7 +46,7 @@ export const Tokens: Story = {
       <Card size="full">
         <CardHeader><CardTitle>Type scale</CardTitle><CardDescription>Text styles pair named size and line-height tokens.</CardDescription></CardHeader>
         <div className="mt-space-5 grid gap-space-4">
-          <p className="text-display font-semibold leading-tight">Display / Tickets</p>
+          <p className="font-display text-display font-semibold leading-tight">Display / Tickets</p>
           <p className="text-title font-semibold leading-tight">Title / Recent activity</p>
           <p className="text-title-sm font-medium">Section / Ticket summary</p>
           <p className="text-body">Body / Readable interface content and instructions.</p>

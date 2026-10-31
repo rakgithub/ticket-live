@@ -15,6 +15,7 @@ export const ConsumerRules: Story = {
     {[
       ['Use public exports', 'Import Button, Textbox, Dropdown, HeaderBar, Card, and ListCard from the design-system entry point. Keep underlying shadcn primitives private.'],
       ['Use semantic tokens', 'Choose role names such as surface-card, text-secondary, and action-primary. Reference palette values only inside the token source.'],
+      ['Use the type tokens', 'Geist is the interface font and Familjen Grotesk is reserved for headings. The shared stylesheet applies the heading family globally.'],
       ['Choose finite variants', 'Use a supported size or variant. If a repeated need is missing, propose a named token and component variant with a story.'],
       ['Preserve accessibility', 'Use labels, accessible names for icon actions, visible focus, keyboard behavior, and error descriptions. Review both themes.'],
       ['Keep app code visual-value free', 'Do not add arbitrary Tailwind values, inline visual styles, raw color literals, or private primitive imports to consuming screens.'],
