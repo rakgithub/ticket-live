@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 @import "./tokens.css";
 @import "./theme.css";
@@ -49,6 +50,7 @@
   --color-action-danger: var(--ds-action-danger);
   --color-action-danger-text: var(--ds-action-danger-text);
   --font-sans: var(--ref-font-sans);
+  --font-display: var(--ref-font-display);
   --font-mono: var(--ref-font-mono);
   --font-weight-regular: var(--ref-weight-regular);
   --font-weight-medium: var(--ref-weight-medium);
@@ -145,6 +147,15 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--ref-font-display);
   }
 
   body {

@@ -3,20 +3,16 @@
   color-scheme: light;
 
   --ref-neutral-0: oklch(1 0 0);
-  --ref-neutral-50: oklch(0.985 0.002 260);
-  --ref-neutral-100: oklch(0.965 0.004 260);
-  --ref-neutral-200: oklch(0.92 0.006 260);
-  --ref-neutral-300: oklch(0.86 0.008 260);
-  --ref-neutral-500: oklch(0.56 0.015 260);
-  --ref-neutral-600: oklch(0.46 0.015 260);
-  --ref-neutral-700: oklch(0.37 0.015 260);
-  --ref-neutral-800: oklch(0.27 0.012 260);
-  --ref-neutral-900: oklch(0.21 0.012 260);
-  --ref-neutral-950: oklch(0.17 0.012 260);
-  --ref-indigo-600: oklch(0.51 0.19 276);
-  --ref-indigo-700: oklch(0.45 0.18 276);
-  --ref-indigo-100: oklch(0.93 0.04 276);
-  --ref-indigo-50: oklch(0.97 0.02 276);
+  --ref-neutral-50: oklch(0.985 0 0);
+  --ref-neutral-100: oklch(0.965 0 0);
+  --ref-neutral-200: oklch(0.92 0 0);
+  --ref-neutral-300: oklch(0.86 0 0);
+  --ref-neutral-500: oklch(0.56 0 0);
+  --ref-neutral-600: oklch(0.46 0 0);
+  --ref-neutral-700: oklch(0.37 0 0);
+  --ref-neutral-800: oklch(0.27 0 0);
+  --ref-neutral-900: oklch(0.21 0 0);
+  --ref-neutral-950: oklch(0.17 0 0);
   --ref-green-700: oklch(0.45 0.12 151);
   --ref-green-100: oklch(0.93 0.05 151);
   --ref-amber-800: oklch(0.48 0.12 75);
@@ -27,7 +23,7 @@
   --ref-amber-dark-surface: oklch(0.32 0.07 75);
   --ref-red-dark-surface: oklch(0.33 0.09 25);
   --ref-red-action-dark: oklch(0.58 0.2 26);
-  --ref-modal-overlay: oklch(0.17 0.012 260 / 0.56);
+  --ref-modal-overlay: oklch(0.17 0 0 / 0.56);
 
   --ref-space-1: 0.25rem;
   --ref-space-2: 0.5rem;
@@ -40,7 +36,8 @@
   --ref-space-12: 3rem;
   --ref-space-16: 4rem;
 
-  --ref-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ref-font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ref-font-display: "Familjen Grotesk", var(--ref-font-sans);
   --ref-font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
   --ref-text-xs: 0.75rem;
   --ref-text-sm: 0.875rem;
@@ -62,8 +59,8 @@
   --ref-radius-lg: 0.875rem;
   --ref-radius-xl: 1.125rem;
   --ref-border-width: 1px;
-  --ref-shadow-card: 0 1px 2px oklch(0.17 0.012 260 / 0.04), 0 8px 24px oklch(0.17 0.012 260 / 0.035);
-  --ref-shadow-popover: 0 12px 32px oklch(0.17 0.012 260 / 0.13);
+  --ref-shadow-card: 0 1px 2px oklch(0.17 0 0 / 0.04), 0 8px 24px oklch(0.17 0 0 / 0.035);
+  --ref-shadow-popover: 0 12px 32px oklch(0.17 0 0 / 0.13);
   --ref-focus-width: 3px;
   --ref-opacity-disabled: 0.5;
   --ref-control-sm: 2.25rem;
