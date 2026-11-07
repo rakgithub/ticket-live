@@ -1,6 +1,7 @@
 # Implementation conventions
 
 - Apply these conventions to features and bug fixes. Follow nearby code and the design-system contract; make the smallest change that addresses the requested behavior.
+- For any logical/behavioral changes relevant unit tests and e2e tests should be created or updated.
 - Keep application logic in `src/features/<domain>/`, with related components, hooks, APIs, types, and tests together. Keep routes and app entry files thin; avoid unrelated refactors during fixes.
 - Import shared UI through `@/ui` and other features through their public exports. Keep reusable UI independent of feature logic; use `src/shared/` only for genuinely shared code.
 - Put raw visual values only in `src/ui/tokens.css`. Use semantic aliases and token-backed utilities; avoid hardcoded visual values, arbitrary Tailwind values, and inline visual styles. Data, IDs, and nonvisual calculations may use numbers. Ensure the design-system checker scans new source directories.
